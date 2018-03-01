@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 -------------------------------------------------
-   File Name：     run.py
+   File Name：     views
    Description :
    Author :       潘晓华
-   date：          2018/2/27
+   date：          2018/3/1
 -------------------------------------------------
 """
 
-from app import App
+from . import account
 
-if __name__ == '__main__':
-    App().run()
+@account.route('/')
+def index():
+    return "Account-Index"

@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 """
 -------------------------------------------------
-   File Name：     run.py
+   File Name：     memu
    Description :
    Author :       潘晓华
-   date：          2018/2/27
+   date：          2018/3/1
 -------------------------------------------------
 """
 
-from app import App
+
+class MenuModel(object):
+    def __init__(self):
+        pass
+
 
 if __name__ == '__main__':
-    App().run()
+    pass

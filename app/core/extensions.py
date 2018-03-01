@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 """
 -------------------------------------------------
-   File Name：     run.py
+   File Name：     extensions
    Description :
    Author :       潘晓华
-   date：          2018/2/27
+   date：          2018/3/1
 -------------------------------------------------
 """
 
-from app import App
+from flask_sqlalchemy import SQLAlchemy
+from flask_redis import FlaskRedis
 
-if __name__ == '__main__':
-    App().run()
+
+db = SQLAlchemy()
+redis = FlaskRedis()
