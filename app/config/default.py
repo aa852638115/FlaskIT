@@ -11,4 +11,15 @@
 
 class Config(object):
     DEBUG = True
-    LANG = 'zh'
+
+    """Mysql数据库配置
+    """
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:@127.0.0.1/dh_it'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_POOL_SIZE = None
+    SQLALCHEMY_ECHO = False
+
+
+    """Redis缓存配置
+    """
+    REDIS_URL = "redis://127.0.0.1:6379/0"

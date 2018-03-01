@@ -16,7 +16,9 @@ flask = "*"
 pymysql = "*"
 flask-sqlalchemy = "*"
 requests = "*"
+flask-cache = "*"
 
 
 [dev-packages]
 
+flask-script = "*"

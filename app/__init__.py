@@ -19,6 +19,7 @@ class App():
     """
     应用类
     """
+
     def __init__(self):
         app = Flask(__name__)
         self.app = app
@@ -33,7 +34,7 @@ class App():
 
     def __init_model(self):
         db.init_app(self.app)
-        redis.init_app(self.app)
+        redis.init_app(self.app, decode_responses=True)
 
     def __register_all_blueprint(self):
         # 注册controllers下所有的蓝图

@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
 -------------------------------------------------
-   File Name：     views
+   File Name：     __init__.py
    Description :
    Author :       潘晓华
    date：          2018/3/1
 -------------------------------------------------
 """
-from . import menu
-from app.models.memu import Menu as MenuModel
 
 
-@menu.route('/')
-def index():
+class Object(object):
+    def __init__(self):
+        pass
 
-    print(MenuModel.generate_menu_data())
-    return 'hello'
+
+if __name__ == '__main__':
+    pass

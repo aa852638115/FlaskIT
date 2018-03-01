@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 """
 -------------------------------------------------
-   File Name：     views
+   File Name：     manager
    Description :
    Author :       潘晓华
    date：          2018/3/1
 -------------------------------------------------
 """
-from . import menu
-from app.models.memu import Menu as MenuModel
 
+from app import App
+from flask_script import Manager
+app = App().get_app()
+manager = Manager(app)
 
-@menu.route('/')
-def index():
-
-    print(MenuModel.generate_menu_data())
-    return 'hello'
+if __name__=='__main__':
+    manager.run()
