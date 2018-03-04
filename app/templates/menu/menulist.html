@@ -1,0 +1,177 @@
+{% extends('layout.html') %}
+{% block head %}
+    <style>
+        .tree a:not(.btn){
+            color: #333;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <h3 style="float:left;">平台权限管理</h3>
+
+    <div class="tablediv">
+        <ul class="tree margin-5" data-ride="tree">
+            {% for menu_item in current_user.get_all_menus() %}
+                {% set temp_url=url_for(menu_item[0].url) if menu_item[0].url else '#' %}
+                <li><a href="{{ temp_url }}"><i
+                        class="icon icon-{{ menu_item[0].icon }}"> {{ menu_item[0].show_name }}</i></a>
+                    {% if not menu_item[0].url %}
+                        <ul val="{{ menu_item[0].id }}">
+                            {% for child_item in menu_item[1] %}
+                                <li><a href="{{ url_for(child_item.url) }}"> {{ child_item.show_name }}</a></li>
+                            {% endfor %}
+                            <li><a href="#" class="add_child_menu btn btn-sm btn-success"><i class="icon icon-plus-sign"> 添加子菜单</i></a></li>
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            <li class="list-style-none"><a href="#" class="add_parent_menu  btn btn-sm btn-success"><i class="icon icon-plus-sign">
+                添加主菜单</i></a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+    <div class="modal fade" id="add_child_menu">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i
+                            class="icon-remove"></i></span><span
+                            class="sr-only">关闭</span></button>
+                    <h4 class="modal-title">添加子菜单</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="add_child_name" class="col-md-2">显示名称</label>
+                            <div class="col-md-10">
+                                <input type="text" id="add_child_name" class="form-control" placeholder="请输入菜单的名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_child_icon" class="col-md-2">图标</label>
+                            <div class="col-md-10">
+                                <input type="text" id="add_child_icon" class="form-control" placeholder="请输入图标名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_child_url" class="col-md-2">链接</label>
+                            <div class="col-md-10">
+                                <input type="text" id="add_child_url" class="form-control" placeholder="请输入链接">
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success" id="add_child_menu_btn">添加</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="add_parent_menu">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i
+                            class="icon-remove"></i></span><span
+                            class="sr-only">关闭</span></button>
+                    <h4 class="modal-title">添加主菜单</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="add_parent_name" class="col-md-2">显示名称</label>
+                            <div class="col-md-10">
+                                <input type="text" id="add_parent_name" class="form-control" placeholder="请输入菜单的名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_parent_icon" class="col-md-2">图标</label>
+                            <div class="col-md-10">
+                                <input type="text" id="add_parent_icon" class="form-control" placeholder="请输入图标名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_parent_url" class="col-md-2">链接</label>
+                            <div class="col-md-10">
+                                <input type="text" id="add_parent_url" class="form-control" placeholder="请输入链接">
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success" id="add_parent_menu_btn">添加</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(".add_parent_menu").click(function () {
+            $('#add_parent_menu').modal()
+        })
+
+        $(".add_child_menu").click(function(){
+            var parent_menu_li = $(this).parent().parent().parent()
+            var parent_menu_name = parent_menu_li.find('a:first').text()
+            parent_id = parent_menu_li.find('ul').attr('val')
+
+            $('#add_child_menu .modal-title').text('为"'+ parent_menu_name + '"添加子菜单')
+            $('#add_child_menu').modal()
+        })
+
+        $('#add_child_menu_btn').click(function(){
+            var show_name = $('#add_child_name').val()
+            var icon = $('#add_child_icon').val()
+            var url = $('#add_child_url').val()
+            $.ajax({
+                url: "{{ url_for('devops.add_menu') }}",
+                type: "post",
+                data: {
+                    'show_name': show_name,
+                    'icon': icon,
+                    'url': url,
+                    'level': 1,
+                    'parent': parent_id
+                },
+                success: function (result) {
+                    toast('添加成功', 'success')
+                    setTimeout("relocation('/devops/')", 500)
+                },
+                error: function (result) {
+                    toast(result.responseText)
+                }
+            })
+        })
+
+        $("#add_parent_menu_btn").click(function(){
+            var show_name = $('#add_parent_name').val()
+            var icon = $('#add_parent_icon').val()
+            var url = $('#add_parent_url').val()
+            $.ajax({
+                url: "{{ url_for('devops.add_menu') }}",
+                type: "post",
+                data: {
+                    'show_name': show_name,
+                    'icon': icon,
+                    'url': url,
+                    'level': 0
+                },
+                success: function (result) {
+                    toast('添加成功', 'success')
+                    setTimeout("relocation('/devops/')", 500)
+                },
+                error: function (result) {
+                    toast(result.responseText)
+                }
+            })
+        })
+    </script>
+{% endblock %}

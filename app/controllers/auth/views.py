@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 """
 -------------------------------------------------
-   File Name：     __init__.py
+   File Name：     views
    Description :
    Author :       潘晓华
-   date：          2018/3/1
+   date：          2018/3/4
 -------------------------------------------------
 """
 
 
-from flask import Blueprint
+from . import auth
 
-account = Blueprint('account', __name__)
-url_prefix = '/'
-
-from . import views
+@auth.route('/')
+def index():
+    return "Auth-Index"

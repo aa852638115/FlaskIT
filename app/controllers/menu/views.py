@@ -7,12 +7,13 @@
    date：          2018/3/1
 -------------------------------------------------
 """
+from app.libraries.common import *
 from . import menu
-from app.models.memu import Menu as MenuModel
+from flask import render_template
 
 
 @menu.route('/')
-def index():
-
-    print(MenuModel.generate_menu_data())
-    return 'hello'
+@login_required
+@check_menu('menu')
+def menu_list():
+    return render_template('menu/menulist.html')

@@ -4,14 +4,13 @@
    File Name：     __init__.py
    Description :
    Author :       潘晓华
-   date：          2018/3/1
+   date：          2018/3/4
 -------------------------------------------------
 """
 
 
 from flask import Blueprint
 
-account = Blueprint('account', __name__)
-url_prefix = '/'
+auth = Blueprint('auth', __name__)
 
 from . import views

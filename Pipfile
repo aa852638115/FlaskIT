@@ -17,6 +17,10 @@ pymysql = "*"
 flask-sqlalchemy = "*"
 requests = "*"
 flask-cache = "*"
+flask-bcrypt = "*"
+flask-login = "*"
+six = "*"
+bcrypt = "*"
 
 
 [dev-packages]

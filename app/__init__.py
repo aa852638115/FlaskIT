@@ -10,9 +10,10 @@
 
 from flask import Flask
 
+from app.models.account import Account
 from .config import load_config
 
-from .core.extensions import db, redis
+from .core.extensions import db, redis, bcrypt, login_manager
 
 
 class App():
@@ -35,6 +36,13 @@ class App():
     def __init_model(self):
         db.init_app(self.app)
         redis.init_app(self.app, decode_responses=True)
+        bcrypt.init_app(self.app)
+        login_manager.init_app(self.app)
+        login_manager.login_view = "auth.index"
+
+        @login_manager.user_loader
+        def user_loader(user_id):
+            return Account.query.get(user_id)
 
     def __register_all_blueprint(self):
         # 注册controllers下所有的蓝图

@@ -1,0 +1,185 @@
+{% extends "main.html" %}
+{% block body %}
+    <div class="row">
+        <div class=" col-lg-1 col-md-1 col-sm-1 col-xs-2" id="leftmenu">
+            <div class="logo"><img src="{{ url_for('static', filename='images/logobig.png') }}" alt=""></div>
+            <ul>
+                {% set current_user_all_items = current_user.get_all_items() %}
+                {% for menu_item in current_user.get_all_menus() %}
+                    {% if menu_item[0].id in current_user_all_items %}
+                        {% set temp_url=url_for(menu_item[0].url) if menu_item[0].url else '#' %}
+                        {% if menu_item[0].url %}
+                            <li><a href="{{ temp_url }}" {% if cur_parent == menu_item[0].id %}
+                                   class="active" {% endif %}>
+                                <i class="icon icon-{{ menu_item[0].icon }}"> {{ menu_item[0].show_name }}</i>
+                            </a></li>
+                        {% else %}
+                            <li class="menu {% if cur_parent == menu_item[0].id %} li-open {% endif %}">
+                                <a href="{{ temp_url }}"><i
+                                        class="icon icon-{{ menu_item[0].icon }}"></i> {{ menu_item[0].show_name }}<i
+                                        class="icon-chevron-down right"></i></a>
+                                <ul class="item2">
+                                    {% for child_item in menu_item[1] %}
+                                        {% if child_item.id in current_user_all_items %}
+                                            <li><a href="{{ url_for(child_item.url) }}"
+                                                    {% if cur_child == child_item.id %}
+                                                   class="active" {% endif %}> {{ child_item.show_name }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class=" col-lg-11 col-md-11  col-sm-11 col-xs-10" id="rightcontent">
+            <div class="row" id="header">
+                <ul class="nav navbar-nav navbar-right" role="navigation">
+                    <li>一线值班电话：4008218728</li>
+                    <li></li>
+                    <li class="dropdow">
+                        <a href="#" data-toggle="dropdown">{{ current_user.username }} <b class="caret"></b></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" id="personal_info_btn">个人信息</a></li>
+                            <li><a id="logout_btn" href="#">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="row" id="content">
+                {% block content %}{% endblock %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <div class="modal fade" id="personal_info_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i
+                            class="icon-remove"></i></span><span
+                            class="sr-only">关闭</span></button>
+                    <h4 class="modal-title">个人信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="add_username" class="col-md-2">用户名</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" readonly
+                                       value="{{ current_user.username }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2">邮箱</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" readonly
+                                       value="{{ current_user.email }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2">所属组</label>
+                            <div class="col-md-10">
+                                {% for group_item in current_user.get_groups() %}
+                                    <span class="label label-success label-badge margin-5 padding-5">
+                                        {{ group_item.group_name }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2"></label>
+                            <div class="col-md-10">
+                                <a href="#myCollapseContent" class="btn btn-info" data-toggle="collapse">修改密码</a>
+                            </div>
+                        </div>
+
+                        <div class="collapse" id="myCollapseContent">
+                            <div class="form-group">
+                                <label for="person_reset_password" class="col-md-2">新密码</label>
+                                <div class="col-md-10">
+                                    <input type="password" id="person_reset_password" class="form-control"
+                                           placeholder="请输入新密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="person_reset_repassword" class="col-md-2">确认新密码</label>
+                                <div class="col-md-10">
+                                    <input type="password" id="person_reset_repassword" class="form-control"
+                                           placeholder="请重复输入新密码">
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-success display-none" id="reset_person_password_btn">修改密码
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#personal_info_btn').click(function () {
+            $('#personal_info_modal').modal()
+        })
+        $('#personal_info_modal').on('hidden.zui.modal', function () {
+            $('#myCollapseContent').collapse('hide')
+            $('#person_reset_password').val('')
+            $('#person_reset_repassword').val('')
+        })
+        $('#logout_btn').click(function () {
+            confirmok('确认退出登录?', callback = function () {
+                $.ajax({
+                    url: "{{ url_for('auth.logout') }}",
+                    type: "post",
+                    success: function (result) {
+                        relocation('/')
+                    },
+                    error: function (result) {
+                        toast(result.responseText)
+                    }
+                })
+            })
+        })
+        $('#myCollapseContent').on('show.zui.collapse', function () {
+            $("#reset_person_password_btn").addClass('display-inline-block')
+        })
+        $('#myCollapseContent').on('hide.zui.collapse', function () {
+            $("#reset_person_password_btn").removeClass('display-inline-block')
+        })
+        $('#reset_person_password_btn').click(function () {
+            var password = $("#person_reset_password").val()
+            var repassword = $("#person_reset_repassword").val()
+
+            if (password.length < 6) {
+                toast("密码长度过短，要大于6位")
+                return false
+            }
+            if (password != repassword) {
+                toast("密码不匹配")
+                return false
+            }
+            cur_user_id = {{ current_user.id }}
+                $.ajax({
+                    url: "{{ url_for('account.reset_password') }}",
+                    type: "put",
+                    data: {'id': cur_user_id, 'password': password, 'repassword': repassword},
+                    success: function (result) {
+                        toast('重置成功', 'success')
+                        $('#personal_info_modal').modal('hide')
+                    },
+                    error: function (result) {
+                        toast(result.responseText)
+                    }
+                })
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/zui/zui.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/zui/zui.datatable.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/zui/uploader/zui.uploader.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/autopf.css') }}">
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.validate.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/zui/zui.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/zui/zui.datatable.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/zui/uploader/zui.uploader.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/autopf.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/echarts.js') }}"></script>
+    {% block head %}{% endblock %}
+    <title>云创自动化平台</title>
+</head>
+<body>
+<div class="container-fluid">
+    {% block body %}{% endblock %}
+</div>
+{% block script %}{% endblock %}
+<div id="confirmok" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                        class="sr-only">关闭</span></button>
+                <h4 class="modal-title">注意</h4>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="confirmok_btn" class="btn btn-danger">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

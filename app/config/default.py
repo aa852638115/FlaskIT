@@ -19,6 +19,10 @@ class Config(object):
     SQLALCHEMY_POOL_SIZE = None
     SQLALCHEMY_ECHO = False
 
+    """LoginManager
+    """
+    SECRET_KEY = 'mbcloud&?57UDF9'
+
 
     """Redis缓存配置
     """
