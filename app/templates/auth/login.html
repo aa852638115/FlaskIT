@@ -1,0 +1,66 @@
+{% extends "main.html" %}
+{% block body %}
+    <div id="login">
+        <div class="login-row">
+            <h2>云创自动化平台</h2>
+        </div>
+        <div class="login-row">
+            <input class="form-control" type="text" name="username" id="username" placeholder="用户名">
+        </div>
+        <div class="login-row">
+            <input class="form-control" type="password" name="password" id="password" placeholder="密码">
+        </div>
+        <div class="login-row">
+            <button id="login_btn" class="btn btn-success btn-block" type="button">登录</button>
+        </div>
+        <div class="login-row">
+            <a href="{{ url_for('auth.forget_password') }}">忘记密码?</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('#login_btn').click(function () {
+            login()
+        })
+
+        document.onkeydown = function (event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode == 27) { // 按 Esc
+                //要做的事情
+            }
+            if (e && e.keyCode == 113) { // 按 F2
+                //要做的事情
+            }
+            if (e && e.keyCode == 13) { // enter 键
+                //要做的事情
+                login()
+            }
+        };
+
+        function login() {
+            username = $('#username').val()
+            password = $('#password').val()
+            if (username == '' || password == '') {
+                toast('请输入用户名和密码')
+                return false
+            }
+            $.ajax({
+                url: "{{ url_for('auth.login') }}",
+                type: "post",
+                data: {
+                    'username': username,
+                    'password': password
+                },
+                success: function (result) {
+                    relocation('/dashboard')
+                },
+                error: function (result) {
+                    toast(result.responseText)
+                }
+            })
+        }
+    </script>
+{% endblock %}

@@ -23,7 +23,7 @@ class Account(db.Model):
     """
     用户账号
     """
-    __tablename__ = 'account'
+    __tablename__ = 'dh_account'
 
     id = db.Column(db.INTEGER, primary_key=True)
     username = db.Column(db.String(45), nullable=False, unique=True)

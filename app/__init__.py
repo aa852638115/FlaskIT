@@ -13,7 +13,7 @@ from flask import Flask
 from app.models.account import Account
 from .config import load_config
 
-from .core.extensions import db, redis, bcrypt, login_manager
+from .core.extensions import db, redis, bcrypt, login_manager, mail
 
 
 class App():
@@ -37,6 +37,7 @@ class App():
         db.init_app(self.app)
         redis.init_app(self.app, decode_responses=True)
         bcrypt.init_app(self.app)
+        mail.init_app(self.app)
         login_manager.init_app(self.app)
         login_manager.login_view = "auth.index"
 

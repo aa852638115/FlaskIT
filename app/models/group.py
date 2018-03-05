@@ -16,7 +16,7 @@ class Group(db.Model):
     """
     权限组
     """
-    __tablename__ = 'mbc_group'
+    __tablename__ = 'dh_group'
     id = db.Column(db.INTEGER, primary_key=True)
     group_name = db.Column(db.String(20))
     menu_ids = db.Column(db.String(45))

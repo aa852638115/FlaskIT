@@ -3,19 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/zui/zui.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/zui/zui.datatable.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/zui/uploader/zui.uploader.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/autopf.css') }}">
-    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.validate.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='plugins/zui/zui.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='plugins/zui/zui.datatable.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='plugins/zui/uploader/zui.uploader.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/autopf.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/echarts.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/layui/css/layui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <script src="{{ url_for('static', filename='plugins/layui/layui.js') }}"></script>
     {% block head %}{% endblock %}
-    <title>云创自动化平台</title>
+    <title>FlaskIT</title>
 </head>
 <body>
 <div class="container-fluid">

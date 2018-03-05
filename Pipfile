@@ -16,11 +16,13 @@ flask = "*"
 pymysql = "*"
 flask-sqlalchemy = "*"
 requests = "*"
+flask_redis = "*"
 flask-cache = "*"
 flask-bcrypt = "*"
 flask-login = "*"
-six = "*"
 bcrypt = "*"
+jwt = "*"
+flask-mail = "*"
 
 
 [dev-packages]

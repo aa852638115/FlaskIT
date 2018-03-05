@@ -11,6 +11,7 @@ from . import account
 from app.libraries.common import *
 
 @account.route('/')
-@check_menu('menu')
+@login_required
+@check_menu('account')
 def index():
     return "Account-Index"

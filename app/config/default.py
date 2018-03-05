@@ -27,3 +27,15 @@ class Config(object):
     """Redis缓存配置
     """
     REDIS_URL = "redis://127.0.0.1:6379/0"
+
+
+    """邮箱服务器配置
+    """
+    MAIL_SUBJECT_PREFIX = '[DH Flask-IT]'
+    MAIL_SERVER = 'mail.aliyun.com'
+    MAIL_PORT = 25
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+    MAIL_USERNAME = "noreply@aliyun.com"
+    MAIL_PASSWORD = "PASSWORD"
+    MAIL_SENDER = 'FlaskIT自动回复<noreply@aliyun.com>'
