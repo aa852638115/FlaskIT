@@ -1,5 +1,4 @@
 [[source]]
-
 url = "http://pypi.douban.com/simple"
 verify_ssl = false
 name = "pypi"
