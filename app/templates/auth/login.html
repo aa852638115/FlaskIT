@@ -2,7 +2,7 @@
 {% block body %}
     <div id="login">
         <div class="login-row">
-            <h2>Flask IT</h2>
+            <h2><span>豆花</span>后台管理中心</h2>
         </div>
         <div class="login-row">
             <input class="form-control" type="text" name="username" id="username" placeholder="用户名">
@@ -16,12 +16,14 @@
         <div class="login-row">
             <a href="{{ url_for('auth.forget_password') }}">忘记密码?</a>
         </div>
+
     </div>
 
 {% endblock %}
 
 {% block script %}
     <script>
+        layui.use('layer')
         $('#login_btn').click(function () {
             login()
         })
@@ -55,7 +57,7 @@
                     'password': password
                 },
                 success: function (result) {
-                    relocation('/dashboard')
+                    relocation('/')
                 },
                 error: function (result) {
                     toast(result.responseText)

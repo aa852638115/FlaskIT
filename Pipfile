@@ -1,29 +1,41 @@
 [[source]]
-url = "http://pypi.douban.com/simple"
+url = "http://mirrors.aliyun.com/pypi/simple/"
 verify_ssl = false
 name = "pypi"
 
-
 [requires]
-
 python_version = "3.6"
 
-
 [packages]
-
-flask = "*"
-pymysql = "*"
-flask-sqlalchemy = "*"
-requests = "*"
+flask = "==0.12.2"
+pymysql = "==0.8.0"
+flask-sqlalchemy = "==2.3.2"
+requests = "==2.18.4"
 flask_redis = "*"
-flask-cache = "*"
-flask-bcrypt = "*"
-flask-login = "*"
-bcrypt = "*"
-jwt = "*"
-flask-mail = "*"
-
+flask-cache = "==0.13.1"
+flask-bcrypt = "==0.7.1"
+Flask-Login = "==0.4.1"
+bcrypt = "==3.1.4"
+jwt = "==0.5.3"
+Flask-Mail = "==0.9.1"
+"asn1crypto" = "==0.24.0"
+blinker = "==1.4"
+certifi = "==2018.4.16"
+cffi = "==1.11.5"
+chardet = "==3.0.4"
+click = "==6.7"
+cryptography = "==1.9"
+flask-redis = "==0.3.0"
+idna = "==2.6"
+itsdangerous = "==0.24"
+"jinja2" = "==2.10"
+markupsafe = "==1.0"
+pycparser = "==2.18"
+redis = "==2.10.6"
+six = "==1.11.0"
+sqlalchemy = "==1.2.7"
+"urllib3" = "==1.22"
+werkzeug = "==0.14.1"
 
 [dev-packages]
-
 flask-script = "*"

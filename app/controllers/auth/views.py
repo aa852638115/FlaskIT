@@ -16,10 +16,10 @@ from app.models.account import Account
 from app.core.extensions import db
 from . import auth
 
+
 @auth.route('/')
 def index():
     return render_template('auth/login.html')
-
 
 
 @auth.route('login', methods=['POST'])
@@ -48,9 +48,11 @@ def logout():
         pass
     return 'success'
 
+
 @auth.route('password/forget', methods=['GET'])
 def forget_password():
     return render_template('login/forget_password.html')
+
 
 @auth.route('password/reset', methods=['GET'])
 def reset_password():
@@ -61,6 +63,7 @@ def reset_password():
     email = data['email']
     return render_template('login/reset_password.html', **locals())
 
+
 def check_token(token):
     try:
         token_json = jwt.decode(token, key=current_app.config['JWT_SECRET_KEY'])
@@ -68,18 +71,19 @@ def check_token(token):
         expir_date = datetime.datetime.strptime(token_json.get('expire_time'), '%Y-%m-%d %H:%M:%S')
         now = datetime.datetime.now()
         if now < expir_date:
-            return {"email":email}
+            return {"email": email}
         else:
             return u'链接已过期'
     except:
         return u'无效请求'
+
 
 @auth.route('password/reset', methods=['PUT'])
 def do_reset_password():
     token = request.form.get('token')
     password = request.form.get('password')
     repassword = request.form.get('repassword')
-    data = check_token(token = token)
+    data = check_token(token=token)
     if not isinstance(data, dict):
         return u'链接已经过期了', 502
     email = data['email']
