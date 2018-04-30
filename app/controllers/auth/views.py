@@ -22,7 +22,7 @@ def index():
     return render_template('auth/login.html')
 
 
-@auth.route('login', methods=['POST'])
+@auth.route('/login', methods=['POST'])
 def login():
     username = request.form.get('username')
     password = request.form.get('password')

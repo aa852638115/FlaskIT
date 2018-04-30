@@ -23,7 +23,6 @@
 
 {% block script %}
     <script>
-        layui.use('layer')
         $('#login_btn').click(function () {
             login()
         })
@@ -57,7 +56,7 @@
                     'password': password
                 },
                 success: function (result) {
-                    relocation('/')
+                    relocation('/dashboard')
                 },
                 error: function (result) {
                     toast(result.responseText)
