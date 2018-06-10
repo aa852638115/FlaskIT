@@ -13,7 +13,6 @@ from flask_login import login_user, logout_user
 from app.libraries.send_mail import SendMail
 import datetime
 import jwt
-from urllib.request import unquote
 from app.models.account import Account
 from app.core.extensions import db
 from . import auth
