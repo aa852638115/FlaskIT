@@ -13,9 +13,7 @@ pip install -r requirements.txt
 > 创建数据库
 ```
 create user 'flaskit'@'%' identified by "flaskit";
-
 grant all on flaskit.* to 'flaskit'@'%';
-
 create database flaskit DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 ```
 > 导入数据库
@@ -33,6 +31,5 @@ python run.py
 ## 作者介绍
 ```
 作者：潘晓华
-
 邮箱：pxhua@aliyun.com
 ```
