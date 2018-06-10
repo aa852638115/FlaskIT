@@ -9,6 +9,7 @@
 """
 
 from app import App
+application = App()
 
 if __name__ == '__main__':
-    App().run()
+    application.run()
