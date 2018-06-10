@@ -10,7 +10,7 @@
 import hashlib
 from app.libraries.common import *
 import random
-import datetime
+from datetime import datetime
 from app.core.extensions import bcrypt
 from flask_login import AnonymousUserMixin
 
@@ -36,7 +36,7 @@ class Account(db.Model):
     def __init__(self, username, email, password, groups=groups):
         self.username = username
         self.email = email
-        self.salt = hashlib.sha1(str(random.random())).hexdigest()
+        self.salt = hashlib.sha1(str(random.random()).encode()).hexdigest()
         self.password = bcrypt.generate_password_hash(password + self.salt)
         self.reg_time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
         self.groups = groups

@@ -8,8 +8,7 @@
 -------------------------------------------------
 """
 
-from app.core.extensions import db, redis
-from app.core.redis import RedisKey
+from app.core.extensions import db
 from app.libraries.common import *
 
 
@@ -38,24 +37,19 @@ class Menu(db.Model):
         处理menus将它主菜单与子菜单分开
         :return:
         """
-        data = redis.get(RedisKey.menu_total_key())
-        data = None
-        if not data:
-            data = {}
-            parent_menu = {}
-            menus = cls.query.all()
-            for menu_item in menus:
-                if menu_item.level is 0:
-                    data.setdefault(menu_item, [])
-                    parent_menu.setdefault(menu_item.id, menu_item)
-                else:
-                    data.setdefault(parent_menu.get(menu_item.parent), []).append(menu_item)
-            if data:
-                data = sorted(data.items(), key=lambda d: d[0].id)
-                redis.set(RedisKey.menu_total_key(), data)
-        else:
-            print(data)
-            data = json.load(data)
+
+        menu_data = cls.query.all()
+        data = {}
+        parent_menu = {}
+        for menu_item in menu_data:
+            if menu_item.level is 0:
+                data.setdefault(menu_item, [])
+                parent_menu.setdefault(menu_item.id, menu_item)
+            else:
+                data.setdefault(parent_menu.get(menu_item.parent), []).append(menu_item)
+        if data:
+            data = sorted(data.items(), key=lambda d: d[0].id)
+
         return data
 
     @classmethod
@@ -72,7 +66,6 @@ class Menu(db.Model):
     @classmethod
     def get_id_by_url_for(cls, url):
         data = cls.query.filter(cls.url == url).first()
-        print(url)
         cur_child = data.id
         cur_parent = data.parent if data.parent else cur_child
         return (cur_parent, cur_child)

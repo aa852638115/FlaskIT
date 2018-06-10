@@ -15,5 +15,5 @@ class RedisKey(object):
     """
 
     @classmethod
-    def menu_total_key(cls):
-        return 'MENU_TOTAL_KEY'
+    def menu_total_data_set(cls):
+        return 'MENU_TOTAL_DATA_SET'
