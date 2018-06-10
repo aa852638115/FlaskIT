@@ -11,7 +11,7 @@ import hashlib
 from app.libraries.common import *
 import random
 import datetime
-from flask_bcrypt import bcrypt
+from app.core.extensions import bcrypt
 from flask_login import AnonymousUserMixin
 
 from app.core.extensions import db

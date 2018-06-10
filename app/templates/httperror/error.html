@@ -1,0 +1,28 @@
+{% extends('main.html') %}
+{% block head %}
+    <style>
+        #show_message {
+        {#            background-color: white;#} position: absolute;
+            text-align: center;
+            width: 340px;
+            left: 50%;
+            top: 150px;
+            margin-left: -170px;
+            padding: 20px 30px;
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div id="show_message">
+        <div class="panel">
+            <div class="panel-body">
+                <h3>{{ msg }}</h3>
+            </div>
+            <div class="panel-footer">
+                <a class="btn btn-success from-control" href="/">返回首页</a>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

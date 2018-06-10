@@ -44,6 +44,6 @@ class SendMail():
         expire_time = datetime.datetime.now() + datetime.timedelta(minutes=15)
         token = jwt.encode({"email": self.email[0], "expire_time": expire_time.strftime('%Y-%m-%d %H:%M:%S')},
                            key=current_app.config['JWT_SECRET_KEY'])
-        msg.html = render_template('mail-temps/forget_passwrod.html', send_url=send_url, token=token)
+        msg.html = render_template('mail_temps/forget_password.html', send_url=send_url, token=token)
         mail.send(msg)
         return True

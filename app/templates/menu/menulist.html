@@ -132,7 +132,7 @@
             var icon = $('#add_child_icon').val()
             var url = $('#add_child_url').val()
             $.ajax({
-                url: "{{ url_for('devops.add_menu') }}",
+                url: "{{ url_for('menu.add_menu') }}",
                 type: "post",
                 data: {
                     'show_name': show_name,
@@ -143,7 +143,7 @@
                 },
                 success: function (result) {
                     toast('添加成功', 'success')
-                    setTimeout("relocation('/devops/')", 500)
+                    setTimeout("relocation('/menu/')", 500)
                 },
                 error: function (result) {
                     toast(result.responseText)
@@ -156,7 +156,7 @@
             var icon = $('#add_parent_icon').val()
             var url = $('#add_parent_url').val()
             $.ajax({
-                url: "{{ url_for('devops.add_menu') }}",
+                url: "{{ url_for('menu.add_menu') }}",
                 type: "post",
                 data: {
                     'show_name': show_name,
@@ -166,7 +166,7 @@
                 },
                 success: function (result) {
                     toast('添加成功', 'success')
-                    setTimeout("relocation('/devops/')", 500)
+                    setTimeout("relocation('/menu/')", 500)
                 },
                 error: function (result) {
                     toast(result.responseText)

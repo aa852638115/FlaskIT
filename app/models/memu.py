@@ -39,6 +39,7 @@ class Menu(db.Model):
         :return:
         """
         data = redis.get(RedisKey.menu_total_key())
+        data = None
         if not data:
             data = {}
             parent_menu = {}
@@ -50,9 +51,10 @@ class Menu(db.Model):
                 else:
                     data.setdefault(parent_menu.get(menu_item.parent), []).append(menu_item)
             if data:
-                data = sorted(data.iteritems(), key=lambda d: d[0].id)
+                data = sorted(data.items(), key=lambda d: d[0].id)
                 redis.set(RedisKey.menu_total_key(), data)
         else:
+            print(data)
             data = json.load(data)
         return data
 
@@ -70,6 +72,7 @@ class Menu(db.Model):
     @classmethod
     def get_id_by_url_for(cls, url):
         data = cls.query.filter(cls.url == url).first()
+        print(url)
         cur_child = data.id
         cur_parent = data.parent if data.parent else cur_child
         return (cur_parent, cur_child)

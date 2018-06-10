@@ -1,0 +1,404 @@
+{% extends('layout.html') %}
+{% block content %}
+
+    <h3 style="float:left;">用户管理</h3>
+    <button type="button" class="btn btn-success right margin-5" id="add_account_btn">
+        <i class="icon icon-plus-sign"></i> 添加新用户
+    </button>
+    <div class="tablediv">
+        <table class="table datatable table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>用户名</th>
+                <th>邮箱</th>
+                <th>组</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for index, item in g.enumerate(accounts) %}
+                <tr val="{{ item.id }}">
+                    <input type="hidden" value="{{ item.id }}"/>
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ item.username }}</td>
+                    <td>{{ item.email }}</td>
+                    <td val="{{ item.groups }}">
+                        {% for index, group_id in g.enumerate(g.json.loads(item.groups)) %}
+                            {% if index > 0 %}
+                                ,
+                            {% endif %}
+                            {{ groups[group_id].group_name }}
+                        {% endfor %}
+
+                    </td>
+                    <td>{{ item.reg_time }}</td>
+                    <td>
+                        <a class="text-danger margin-2 edit_account" title="修改用户信息" href="#"><i class="icon-edit"></i> </a>
+                        <a class="text-danger margin-2 reset_password" title="重置用户密码" href="#"><i class="icon-key"></i> </a>
+                        <a class="text-danger margin-2 del_account" title="删除用户" href="#"><i class="icon-trash"></i> </a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+    <div class="modal fade" id="account_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i
+                            class="icon-remove"></i></span><span
+                            class="sr-only">关闭</span></button>
+                    <h4 class="modal-title">添加新用户</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="add_username" class="col-md-2">用户名</label>
+                            <div class="col-md-10">
+                                <input type="text" id="add_username" class="form-control" placeholder="请输入用户名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_email" class="col-md-2">邮箱</label>
+                            <div class="col-md-10">
+                                <input type="text" id="add_email" class="form-control" placeholder="请输入邮箱"
+                                       autocomplete="new-password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_email" class="col-md-2">密码</label>
+                            <div class="col-md-10">
+                                <input type="password" id="add_password" class="form-control" placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_email" class="col-md-2">确认密码</label>
+                            <div class="col-md-10">
+                                <input type="password" id="add_repassword" class="form-control" placeholder="请重复输入密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2">所属组</label>
+                            <div class="col-md-10">
+                                {% for group_id, group_item in groups.items() %}
+                                    <label class="checkbox-inline">
+                                        <input name="group_ids" value="{{ group_item.id }}"
+                                               type="checkbox">{{ group_item.group_name }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-success" id="add_account">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit_account_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i
+                            class="icon-remove"></i></span><span
+                            class="sr-only">关闭</span></button>
+                    <h4 class="modal-title">更新用户</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="edit_username" class="col-md-2">用户名</label>
+                            <div class="col-md-10">
+                                <input type="text" id="edit_username" class="form-control" placeholder="请输入用户名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_email" class="col-md-2">邮箱</label>
+                            <div class="col-md-10">
+                                <input type="text" id="edit_email" class="form-control" placeholder="请输入邮箱"
+                                       autocomplete="new-password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2">所属组</label>
+                            <div class="col-md-10">
+                                {% for group_id, group_item in groups.items() %}
+                                    <label class="checkbox-inline">
+                                        <input name="group_ids" value="{{ group_item.id }}"
+                                               type="checkbox">{{ group_item.group_name }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-success" id="edit_account">保存修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="reset_password_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i
+                            class="icon-remove"></i></span><span
+                            class="sr-only">关闭</span></button>
+                    <h4 class="modal-title">重置用户密码</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="reset_username" class="col-md-2">用户名</label>
+                            <div class="col-md-10">
+                                <input type="text" id="reset_username" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reset_email" class="col-md-2">邮箱</label>
+                            <div class="col-md-10">
+                                <input type="text" id="reset_email" class="form-control" readonly
+                                       autocomplete="new-password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reset_password" class="col-md-2">密码</label>
+                            <div class="col-md-10">
+                                <input type="password" id="reset_password" class="form-control" placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reset_repassword" class="col-md-2">确认密码</label>
+                            <div class="col-md-10">
+                                <input type="password" id="reset_repassword" class="form-control" placeholder="请重复输入密码">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-success" id="reset_password_btn">重置密码</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#add_account_btn').click(function () {
+            reset_model_func('添加新用户', "", "", [], 'add_account')
+            $('#account_modal').modal()
+        })
+
+        $('#add_account').click(function () {
+            var username = $("#add_username").val()
+            var email = $("#add_email").val()
+            var password = $("#add_password").val()
+            var repassword = $("#add_repassword").val()
+            if (username.length == 0 || email.length == 0) {
+                toast("请输入完整信息!")
+                return false
+            }
+
+            if (username.search('@') != -1) {
+                toast("用户名不能出现'@'，请更换用户名")
+                return false
+            }
+            if (password.length < 6) {
+                toast("密码长度过短，要大于6位")
+                return false
+            }
+            if (password != repassword) {
+                toast("密码不匹配")
+                return false
+            }
+
+            var group_ids = []
+            $('#account_modal input:checkbox:checked').each(function () {
+                group_ids.push($(this).val())
+            })
+
+            if (group_ids.length == 0) {
+                toast("请选择用户所在组")
+                return false
+            }
+
+            ipreg = /^[\.a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+            if (!ipreg.test(email)) {
+                toast('输入邮箱格式有误，请检查确认')
+                return false
+            }
+
+
+            $.ajax({
+                url: "{{ url_for('account.add_account') }}",
+                type: "post",
+                data: {
+                    'username': username,
+                    'email': email,
+                    'password': password,
+                    'repassword': repassword,
+                    'group_ids': JSON.stringify(group_ids)
+                },
+                success: function (result) {
+                    toast('添加成功', 'success')
+                    setTimeout("relocation('/account/')", 500)
+                },
+                error: function (result) {
+                    toast(result.responseText)
+                }
+            })
+        })
+
+
+        $('.edit_account').click(function () {
+            var this_tr = $(this).parent().parent()
+            var username = this_tr.find("td:eq(1)").text()
+            var email = this_tr.find("td:eq(2)").text()
+            var group_ids = JSON.parse(this_tr.find("td:eq(3)").attr('val'))
+            cur_id = this_tr.attr('val')
+            reset_model_func('edit_account_modal', username, email, group_ids, 'add_account')
+            $('#edit_account_modal').modal()
+        })
+
+        $('#edit_account').click(function () {
+            var edit_username = $("#edit_username").val()
+            var edit_email = $("#edit_email").val()
+            if (edit_username.length == 0 || edit_email.length == 0) {
+                toast("请输入完整信息!")
+                return false
+            }
+
+            if (edit_username.search('@') != -1) {
+                toast("用户名不能出现'@'，请更换用户名")
+                return false
+            }
+
+            ipreg = /^[\.a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+            if (!ipreg.test(edit_email)) {
+                toast('输入邮箱格式有误，请检查确认')
+                return false
+            }
+
+            var group_ids = []
+            $('#edit_account_modal input:checkbox:checked').each(function () {
+                group_ids.push($(this).val())
+            })
+
+            if (group_ids.length == 0) {
+                toast("请选择用户所在组")
+                return false
+            }
+
+            $.ajax({
+                url: "{{ url_for('account.edit_account') }}",
+                type: "put",
+                data: {
+                    'username': edit_username,
+                    'group_ids': JSON.stringify(group_ids),
+                    'email': edit_email,
+                    'account_id': cur_id
+                },
+                success: function (result) {
+                    toast('修改成功', 'success')
+                    setTimeout("relocation('/account/')", 500)
+                },
+                error: function (result) {
+                    toast(result.responseText)
+                }
+            })
+        })
+
+        $(".del_account").click(function () {
+            var this_tr = $(this).parent().parent()
+            var username = this_tr.find("td:eq(1)").text()
+            var cur_id = this_tr.attr('val')
+            confirmok('确认删除"' + username + '"？', function () {
+                $.ajax({
+                    url: "{{ url_for('account.delete_account') }}",
+                    type: "delete",
+                    data: {'id': cur_id},
+                    success: function (result) {
+                        toast('删除成功', 'success')
+                        setTimeout("relocation('/account/')", 500)
+                    },
+                    error: function (result) {
+                        toast(result.responseText)
+                    }
+                })
+            }, '删除')
+        })
+
+        $('.reset_password').click(function () {
+            var this_tr = $(this).parent().parent()
+            var username = this_tr.find("td:eq(1)").text()
+            var email = this_tr.find("td:eq(2)").text()
+            reset_cur_id = this_tr.attr('val')
+            reset_model_func('reset_password_modal', username, email, [], 'add_account')
+            $('#reset_password_modal').modal()
+        })
+
+        $('#reset_password_btn').click(function () {
+            var password = $("#reset_password").val()
+            var repassword = $("#reset_repassword").val()
+
+            if (password.length < 6) {
+                toast("密码长度过短，要大于6位")
+                return false
+            }
+            if (password != repassword) {
+                toast("密码不匹配")
+                return false
+            }
+            $.ajax({
+                url: "{{ url_for('account.reset_password') }}",
+                type: "put",
+                data: {'id': reset_cur_id, 'password': password, 'repassword': repassword},
+                success: function (result) {
+                    toast('重置成功', 'success')
+                    setTimeout("relocation('/account/')", 500)
+                },
+                error: function (result) {
+                    toast(result.responseText)
+                }
+            })
+        })
+
+
+        function reset_model_func(model_name, user_name, email, group_ids) {
+            if (model_name == 'reset_password_modal') {
+                $("#reset_username").val(user_name)
+                $("#reset_email").val(email)
+                return true
+            }
+            if (model_name == 'edit_account_modal') {
+                $("#edit_username").val(user_name)
+                $("#edit_email").val(email)
+            } else if (model_name == "account_modal") {
+                $("#add_username").val(user_name)
+                $("#add_email").val(email)
+            }
+            $('#' + model_name + ' input:checkbox').each(function () {
+                if ($.inArray(parseInt($(this).val()), group_ids) != -1) {
+                    $(this).prop('checked', true)
+                } else {
+                    $(this).prop('checked', false)
+                }
+            })
+        }
+    </script>
+
+{% endblock %}

@@ -2,7 +2,10 @@
 {% block body %}
     <div class="row">
         <div class=" col-lg-1 col-md-1 col-sm-1 col-xs-2" id="leftmenu">
-            <div class="logo"><img src="{{ url_for('static', filename='images/logobig.png') }}" alt=""></div>
+            <div class="logo">
+{#                <img src="{{ url_for('static', filename='images/logobig.png') }}" alt="FLASKIT">#}
+                <h3 class="text-center text-success">豆花后台管理</h3>
+            </div>
             <ul>
                 {% set current_user_all_items = current_user.get_all_items() %}
                 {% for menu_item in current_user.get_all_menus() %}
@@ -37,7 +40,6 @@
         <div class=" col-lg-11 col-md-11  col-sm-11 col-xs-10" id="rightcontent">
             <div class="row" id="header">
                 <ul class="nav navbar-nav navbar-right" role="navigation">
-                    <li>一线值班电话：4008218728</li>
                     <li></li>
                     <li class="dropdow">
                         <a href="#" data-toggle="dropdown">{{ current_user.username }} <b class="caret"></b></a>

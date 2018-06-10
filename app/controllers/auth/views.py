@@ -10,8 +10,10 @@
 
 from flask import render_template, request, current_app
 from flask_login import login_user, logout_user
+from app.libraries.send_mail import SendMail
 import datetime
 import jwt
+from urllib.request import unquote
 from app.models.account import Account
 from app.core.extensions import db
 from . import auth
@@ -51,7 +53,7 @@ def logout():
 
 @auth.route('password/forget', methods=['GET'])
 def forget_password():
-    return render_template('login/forget_password.html')
+    return render_template('auth/forget_password.html')
 
 
 @auth.route('password/reset', methods=['GET'])
@@ -61,12 +63,12 @@ def reset_password():
     if not isinstance(data, dict):
         return render_template('httperror/error.html', msg=data)
     email = data['email']
-    return render_template('login/reset_password.html', **locals())
+    return render_template('auth/reset_password.html', **locals())
 
 
 def check_token(token):
     try:
-        token_json = jwt.decode(token, key=current_app.config['JWT_SECRET_KEY'])
+        token_json = jwt.decode(eval(token), key=current_app.config['JWT_SECRET_KEY'])
         email = token_json.get('email')
         expir_date = datetime.datetime.strptime(token_json.get('expire_time'), '%Y-%m-%d %H:%M:%S')
         now = datetime.datetime.now()

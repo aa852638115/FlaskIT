@@ -1,0 +1,17 @@
+{% extends('layout.html') %}
+{% block head %}
+    <style>
+        #middle{
+            width: 300px;
+            margin-top:200px;
+            margin-left:calc(50% - 150px);
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="middle">
+        <i class="icon-5x icon-lock"></i>
+        <h3>你没有该操作的权限，请联系管理员！</h3>
+    </div>
+{% endblock %}
