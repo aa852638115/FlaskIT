@@ -86,7 +86,6 @@ def edit_account():
     account_item.username = username
     account_item.email = email
     account_item.groups = group_ids.replace('"', '')
-    print(group_ids)
     db.session.add(account_item)
     db.session.commit()
     return 'success'
@@ -108,8 +107,6 @@ def reset_password():
     repassword = request.form['repassword']
     if not password or len(password) < 6:
         return u'密码长度过短，要大于6位', 502
-    print(password)
-    print(repassword)
     if password != repassword:
             return u'密码不匹配，请检查', 502
     account_model = Account.query.filter(Account.id == id).first()
