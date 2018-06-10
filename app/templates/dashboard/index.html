@@ -23,11 +23,15 @@
         <div class="panel-body">
             <p>1. 安装依赖</p>
             <p><code>pip install -r requirements.txt</code></p>
-            <p>2.导入数据库</p>
+            <p>2. 创建数据库 <code></code> </p>
+            <p><code>create user 'flaskit'@'%' identified by "flaskit";</code></p>
+            <p><code>grant all on flaskit.* to 'flaskit'@'%';</code></p>
+            <p><code>create database flaskit DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;</code></p>
+            <p>3.导入数据库</p>
             <p><code>mysql -uroot < db_schema/flaskit.sql</code></p>
-            <p>3.启动应用</p>
+            <p>4.启动应用</p>
             <p><code>python run.py</code></p>
-            <p>4.浏览器网问：http://127.0.0.1:5000</p>
+            <p>5.浏览器网问：http://127.0.0.1:5000</p>
             <p><code>账号：admin  密码：123456</code>
         </p>
         </div>
