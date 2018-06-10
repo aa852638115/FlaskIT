@@ -22,6 +22,10 @@ from . import auth
 def index():
     return render_template('auth/login.html')
 
+@auth.route('/info')
+def info():
+    return render_template('auth/info.html')
+
 
 @auth.route('/login', methods=['POST'])
 def login():

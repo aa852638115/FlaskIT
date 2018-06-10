@@ -1,0 +1,75 @@
+{% extends "main.html" %}
+{% block body %}
+    <div class="row">
+        <div class=" col-lg-1 col-md-1 col-sm-1 col-xs-2" id="leftmenu">
+            <div class="logo">
+                <h3 class="text-center text-success">豆花后台管理</h3>
+            </div>
+            <ul>
+                <li><a href="#" class="active">
+                    <i class="icon icon-dashboard"> 简介</i>
+                </a></li>
+                <li>
+                    <a href="/">
+                        <i class="icon icon-home"> 返回登录</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class=" col-lg-11 col-md-11  col-sm-11 col-xs-10" id="rightcontent">
+            <div class="row" id="header">
+                <ul class="nav navbar-nav navbar-right" role="navigation">
+                    <li></li>
+                    <li >
+                        <a href="/">返回登录页</a>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="row" id="content">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Flask IT介绍
+                    </div>
+                    <div class="panel-body">
+                        <h3>Flask IT是基于Flask构建的一个IT管理网站。</h3>
+                        <ul>
+                            <li>动态自动加载功能目录</li>
+                            <li>图形化功能管理</li>
+                            <li>账号管理（登录，添加账号，更新账号，找回密码）</li>
+                            <li>多权限组管理</li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-heading">
+                        安装方法
+                    </div>
+                    <div class="panel-body">
+                        <p>1. 安装依赖</p>
+                        <p><code>pip install -r requirements.txt</code></p>
+                        <p>2.导入数据库</p>
+                        <p><code>mysql -uroot < db_schema/flaskit.sql</code></p>
+                        <p>3.启动应用</p>
+                        <p><code>python run.py</code></p>
+                        <p>4.浏览器网问：http://127.0.0.1:5000</p>
+                        <p><code>账号：admin 密码：123456</code>
+                        </p>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-heading">
+                        作者介绍
+                    </div>
+                    <div class="panel-body">
+                        <p>作者：潘晓华</p>
+                        <p>邮箱：pxhua@aliyun.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

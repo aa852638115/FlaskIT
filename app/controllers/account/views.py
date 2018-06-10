@@ -7,14 +7,10 @@
    date：          2017/9/11
 -------------------------------------------------
 """
-import json
-from flask_login import current_user
-from flask import render_template
 from flask import g
 from flask import request
 from app.models.account import Account
 from app.models.group import Group
-from app.models.memu import Menu
 from . import account
 from app.core.extensions import db
 from app.libraries.common import *
@@ -34,6 +30,7 @@ def index(cur_parent, cur_child):
     return render_template('account/userlist.html', **locals())
 
 @account.route('/account', methods=['POST'])
+@login_required
 def add_account():
     username = request.form.get('username')
     email = request.form.get('email')
@@ -62,6 +59,7 @@ def add_account():
     return 'success'
 
 @account.route('/account', methods=['PUT'])
+@login_required
 def edit_account():
     username = request.form.get('username')
     email = request.form.get('email')
@@ -91,6 +89,7 @@ def edit_account():
     return 'success'
 
 @account.route('/account', methods=['DELETE'])
+@login_required
 def delete_account():
     id = int(request.form['id'])
     account_model = Account.query.filter(Account.id == id).first()
@@ -101,6 +100,7 @@ def delete_account():
     return 'success'
 
 @account.route('/reset/pass', methods=['PUT'])
+@login_required
 def reset_password():
     id = int(request.form['id'])
     password = request.form['password']
@@ -125,6 +125,7 @@ def group(cur_parent, cur_child):
 
 
 @account.route('/group', methods=['POST'])
+@login_required
 def add_group():
     group_name = request.form.get('group_name')
     group_menu_ids = request.form.get('group_menu_ids')
@@ -141,6 +142,7 @@ def add_group():
 
 
 @account.route('/group', methods=['PUT'])
+@login_required
 def edit_group():
     group_name = request.form.get('group_name')
     group_menu_ids = request.form.get('group_menu_ids')
@@ -157,6 +159,7 @@ def edit_group():
     return 'success'
 
 @account.route('/group', methods=['DELETE'])
+@login_required
 def delete_group():
     id = int(request.form['id'])
     group_model = Group.query.filter(Group.id == id).first()
