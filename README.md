@@ -6,6 +6,7 @@
 - 多权限组管理
 
 ## 安装方法
+###虚拟机部署
 > 安装Python依赖
 ```
 pip install -r requirements.txt
@@ -23,6 +24,15 @@ mysql -uroot < db_schema/flaskit.sql
 > 启动应用
 ```
 python run.py
+```
+> 浏览器网问：http://127.0.0.1:5000
+```
+账号：admin 密码：123456
+```
+###docker-compose部署
+>部署
+```
+docker-compose up
 ```
 > 浏览器网问：http://127.0.0.1:5000
 ```

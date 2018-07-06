@@ -22,7 +22,9 @@ def load_config():
         elif env == 'TESTING':
             from .testing import TestingConfig
             return TestingConfig
-
+        elif env == 'DOCKER':
+            from .docker import DockerConfig
+            return DockerConfig
         else:
             from .development import DevelopmentConfig
             return DevelopmentConfig
