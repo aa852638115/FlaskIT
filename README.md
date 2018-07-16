@@ -32,6 +32,11 @@ python run.py
 账号：admin 密码：123456
 ```
 ### docker-compose部署
+>加速docker
+```
+#/etc/sysconfig/docker
+OPTIONS添加 --registry-mirror=https://docker.mirrors.ustc.edu.cn
+```
 >部署
 ```
 docker-compose up
