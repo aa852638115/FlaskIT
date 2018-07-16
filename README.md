@@ -11,12 +11,12 @@
 
 > 安装Python依赖
 ```
-pip install -r requirements.txt
+pip install -r requirements.txt -i https://pypi.douban.com/simple
 ```
 > 创建数据库
 ```
-create user 'flaskit'@'%' identified by "flaskit";
-grant all on flaskit.* to 'flaskit'@'%';
+create user 'flaskit'@'127.0.0.1' identified by "flaskit";
+grant all on flaskit.* to 'flaskit'@'127.0.0.1';
 create database flaskit DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 ```
 > 导入数据库
