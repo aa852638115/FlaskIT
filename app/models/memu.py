@@ -75,7 +75,8 @@ class Menu(db.Model):
 
     @classmethod
     def clear_cache(cls):
-        redis.delete(RedisKey.menu_total_key())
+        #redis.delete(RedisKey.menu_total_key())
+        pass
 
 
 if __name__ == '__main__':
